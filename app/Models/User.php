@@ -18,9 +18,16 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
         'email',
+        'phone',
+        'address',
+        'city',
+        'country',
         'password',
+        'role',
+        'profile_photo_path',
     ];
 
     /**
@@ -44,5 +51,69 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * Get the full name of the user.
+     */
+    public function getFullNameAttribute(): string
+    {
+        return "{$this->first_name} {$this->last_name}";
+    }
+
+    /**
+     * Check if user is a super admin.
+     */
+    public function isSuperAdmin(): bool
+    {
+        return $this->role === 'super_admin';
+    }
+
+    /**
+     * Check if user is a club owner.
+     */
+    public function isClubOwner(): bool
+    {
+        return $this->role === 'club_owner';
+    }
+
+    /**
+     * Check if user is a trainer.
+     */
+    public function isTrainer(): bool
+    {
+        return $this->role === 'trainer';
+    }
+
+    /**
+     * The clubs that the user is associated with (as a trainer or owner).
+     */
+    public function clubs()
+    {
+        return $this->belongsToMany(Club::class, 'club_user')->withPivot('role', 'is_active');
+    }
+
+    /**
+     * The club where the user is the owner.
+     */
+    public function ownedClubs()
+    {
+        return $this->hasMany(Club::class, 'owner_id');
+    }
+
+    /**
+     * Trainings where the user is the trainer.
+     */
+    public function trainings()
+    {
+        return $this->hasMany(Training::class, 'trainer_id');
+    }
+
+    /**
+     * Competitions organized by the user's club.
+     */
+    public function competitions()
+    {
+        return $this->hasMany(Competition::class, 'club_id');
     }
 }
