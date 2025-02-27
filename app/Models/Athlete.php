@@ -43,4 +43,9 @@ class Athlete extends Model
     {
         return $this->hasMany(Payment::class);
     }
+
+    public function competitions()
+    {
+        return $this->belongsToMany(Competition::class, 'competition_results', 'athlete_id', 'competition_id');
+    }
 }

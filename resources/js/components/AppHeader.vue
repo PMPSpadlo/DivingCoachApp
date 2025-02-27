@@ -18,7 +18,7 @@ import UserMenuContent from '@/components/UserMenuContent.vue';
 import { getInitials } from '@/composables/useInitials';
 import type { BreadcrumbItem, NavItem } from '@/types';
 import { Link, usePage } from '@inertiajs/vue3';
-import { BookOpen, Folder, LayoutGrid, Menu, Search } from 'lucide-vue-next';
+import { LayoutGrid, Users, Calendar, Trophy, CreditCard } from 'lucide-vue-next';
 import { computed } from 'vue';
 
 interface Props {
@@ -41,23 +41,32 @@ const activeItemStyles = computed(() => (url: string) => (isCurrentRoute(url) ? 
 const mainNavItems: NavItem[] = [
     {
         title: 'Dashboard',
-        href: '/dashboard',
+        href: route('dashboard'),
         icon: LayoutGrid,
+    },
+    {
+        title: 'Zawodnicy',
+        href: route('athletes.index'),
+        icon: Users,
+    },
+    {
+        title: 'Treningi',
+        href: route('trainings.index'),
+        icon: Calendar,
+    },
+    {
+        title: 'Zawody',
+        href: route('competitions.index'),
+        icon: Trophy,
+    },
+    {
+        title: 'Płatności',
+        href: route('payments.index'),
+        icon: CreditCard,
     },
 ];
 
-const rightNavItems: NavItem[] = [
-    {
-        title: 'Repository',
-        href: 'https://github.com/laravel/vue-starter-kit',
-        icon: Folder,
-    },
-    {
-        title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits',
-        icon: BookOpen,
-    },
-];
+const rightNavItems: NavItem[] = [];
 </script>
 
 <template>
