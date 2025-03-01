@@ -17,20 +17,26 @@ const submit = () => {
 </script>
 
 <template>
-    <AuthLayout title="Verify email" description="Please verify your email address by clicking on the link we just emailed to you.">
-        <Head title="Email verification" />
+    <AuthLayout title="Weryfikacja adresu email" description="Prosimy o weryfikację adresu email, klikając w link, który wysłaliśmy na podany adres.">
+        <Head title="Weryfikacja email" />
 
-        <div v-if="status === 'verification-link-sent'" class="mb-4 text-center text-sm font-medium text-green-600">
-            A new verification link has been sent to the email address you provided during registration.
+        <div v-if="status === 'verification-link-sent'" class="mb-4 text-center text-sm font-medium text-green-600 dark:text-green-400">
+            Nowy link weryfikacyjny został wysłany na adres e-mail podany podczas rejestracji.
         </div>
 
         <form @submit.prevent="submit" class="space-y-6 text-center">
-            <Button :disabled="form.processing" variant="secondary">
-                <LoaderCircle v-if="form.processing" class="h-4 w-4 animate-spin" />
-                Resend verification email
+            <Button
+                :disabled="form.processing"
+                variant="secondary"
+                class="bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500 dark:bg-blue-700 dark:hover:bg-blue-600"
+            >
+                <LoaderCircle v-if="form.processing" class="h-4 w-4 animate-spin mr-2" />
+                Wyślij ponownie email weryfikacyjny
             </Button>
 
-            <TextLink :href="route('logout')" method="post" as="button" class="mx-auto block text-sm"> Log out </TextLink>
+            <TextLink :href="route('logout')" method="post" as="button" class="mx-auto block text-sm text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white">
+                Wyloguj się
+            </TextLink>
         </form>
     </AuthLayout>
 </template>
